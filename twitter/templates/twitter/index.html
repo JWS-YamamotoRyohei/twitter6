@@ -2,12 +2,11 @@
 {% if latest_tweet_list %}
     <a href= "{% url 'twitter:tweetlist' %}">Tweet List</a>
 
-    <!-- <br>
+    <br>
         <br>
             <a href= "{% url 'twitter:signup' %}">Sign Up</a>
-            <a href= "{% url 'twitter:login' %}">Login</a>
         </br>
-    </br> -->
+    </br>
 {% else %}
     <p>No twitter are available.</p>
 {% endif %}
