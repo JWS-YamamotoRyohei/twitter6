@@ -1,0 +1,17 @@
+<h1>Tweet Detail</h1>
+<p>
+    {{ tweet.tweet_text }}
+    <br>
+        <!-- <div style="display:inline-flex">
+            <form action="{% url 'twitter:detail' tweet.id %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="お気に入り">
+            </form>
+        :{{ tweet.nicevotes }}
+        </div> -->
+    </br>
+    <br>
+        <a href= "{% url 'twitter:tweetlist' %}">Tweet List</a>
+    </br>
+</p>

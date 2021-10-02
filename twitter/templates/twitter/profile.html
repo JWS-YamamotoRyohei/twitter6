@@ -1,0 +1,16 @@
+{% block body %}
+<h1>@{{ username }}</h1>
+<h3>{{ object.name }}</h3>
+<h6>{{ object.about_me }}</h6>
+
+<!-- {% if user.username == username %}
+
+{% elif connected %}
+<a href="{% url 'twitter:unfollow' username %}" class="btn btn-dark">フォロー解除</a>
+{% else %}
+<a href="{% url 'twitter:follow' username %}" class="btn btn-light">フォロー</a>
+{% endif %} -->
+<br>
+    <a href= "{% url 'twitter:tweetlist' %}">Tweet List</a>
+</br>
+{% endblock %}
