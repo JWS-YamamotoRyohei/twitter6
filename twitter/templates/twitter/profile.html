@@ -1,4 +1,7 @@
-{% block body %}
+{% extends 'twitter/base.html' %}
+
+{% block content %}
+
 <h1>@{{ username }}</h1>
 <h3>{{ object.name }}</h3>
 <h6>{{ object.about_me }}</h6>
@@ -12,5 +15,4 @@
 {% endif %} -->
 <br>
     <a href= "{% url 'twitter:tweetlist' %}">Tweet List</a>
-</br>
 {% endblock %}

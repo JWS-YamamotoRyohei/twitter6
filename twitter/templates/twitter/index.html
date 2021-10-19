@@ -1,3 +1,7 @@
+{% extends 'twitter/base.html' %}
+
+{% block content %}
+
 <h1>Welcome to Twitter App.</h1>
 {% if latest_tweet_list %}
     <a href= "{% url 'twitter:tweetlist' %}">Tweet List</a>
@@ -5,8 +9,7 @@
     <br>
         <br>
             <a href= "{% url 'twitter:signup' %}">Sign Up</a>
-        </br>
-    </br>
 {% else %}
     <p>No twitter are available.</p>
 {% endif %}
+{% endblock %}
