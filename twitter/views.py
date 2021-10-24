@@ -67,17 +67,17 @@ def detail(request, tweet_id):
 #     return render(request, 'twitter/tweet_new.html', {'form': form})
 
 
-# def signup(request):
-#     if request.method == 'POST':
-#         form = SignUpForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('twitter:tweetlist')
-#     else:
-#         form = SignUpForm()
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('twitter:tweetlist')
+    else:
+        form = SignUpForm()
 
-#     context = {'form':form}
-#     return render(request, 'twitter/signup.html', context)
+    context = {'form':form}
+    return render(request, 'twitter/signup.html', context)
 
 # class ProfileDetailView(LoginRequiredMixin, DetailView):
 #     model = User

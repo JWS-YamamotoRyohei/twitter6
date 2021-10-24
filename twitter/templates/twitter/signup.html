@@ -1,0 +1,9 @@
+{% extends 'twitter/base.html' %}
+{% block content %}
+<h1>Please Sign Up to Twitter App.</h1>
+<form action="{% url 'twitter:signup' %}" method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Sign Up">
+</form>
+{% endblock %}
