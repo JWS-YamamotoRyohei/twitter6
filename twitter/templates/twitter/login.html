@@ -3,7 +3,7 @@
 {% block content %}
 
 <h1>Please Login to Twitter App.</h1>
-<form action="{% url 'twitter:login' %}" method="post">
+<form action="{% url 'twitter:index' %}" method="post">
 {% csrf_token %}
 {{ form.as_p }}
 <input type="submit" value="Login">
