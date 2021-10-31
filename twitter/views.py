@@ -79,11 +79,11 @@ def signup(request):
     context = {'form':form}
     return render(request, 'twitter/signup.html', context)
 
-#class ProfileDetailView(LoginRequiredMixin, DetailView):
-#     model = User
-#     template_name = "twitter/profile.html"
-#     slug_field = 'username'
-#     slug_url_kwarg = 'username'
+class ProfileDetailView(LoginRequiredMixin, DetailView):
+     model = User
+     template_name = "twitter/profile.html"
+     slug_field = 'username'
+     slug_url_kwarg = 'username'
 
 #     def get_context_data(self, **kwargs):
 #         context = super(ProfileDetailView, self).get_context_data(**kwargs)
