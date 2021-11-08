@@ -27,13 +27,13 @@ def index(request):
     context = {'latest_tweet_list': latest_tweet_list}
     return render(request, 'twitter/index.html', context)
 
-# @login_required
+@login_required
 def tweetlist(request):
     latest_tweet_list = Tweet.objects.all().order_by('-pub_date')[:5]
     context = {'latest_tweet_list': latest_tweet_list}
     return render(request, 'twitter/tweetlist.html', context)
 
-# @login_required
+@login_required
 def detail(request, tweet_id):
     user = request.user
     tweet = get_object_or_404(Tweet, pk=tweet_id)
@@ -79,7 +79,7 @@ def signup(request):
     context = {'form':form}
     return render(request, 'twitter/signup.html', context)
 
-# class ProfileDetailView(LoginRequiredMixin, DetailView):
+#class ProfileDetailView(LoginRequiredMixin, DetailView):
 #     model = User
 #     template_name = "twitter/profile.html"
 #     slug_field = 'username'
