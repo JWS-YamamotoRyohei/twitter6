@@ -20,6 +20,4 @@ from django.views.generic import base
 urlpatterns = [
     path('twitter/', include('twitter.urls')),
     path('admin/', admin.site.urls),
-#   path('accounts/login/', base.RedirectView.as_view(pattern_name="twitter:login")),
-#   path('accounts/profile/', base.RedirectView.as_view(pattern_name="twitter:index")),
 ]

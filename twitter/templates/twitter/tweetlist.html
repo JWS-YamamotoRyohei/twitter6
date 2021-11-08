@@ -12,6 +12,9 @@
         </li>
     {% endfor %}
     </ul>
+
+    <a href= "{% url 'twitter:logout' %}">Logout</a>
+    
 {% else %}
     <p>No twitter are available.</p>
 {% endif %}
