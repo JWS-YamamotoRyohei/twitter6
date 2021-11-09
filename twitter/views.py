@@ -51,20 +51,19 @@ def detail(request, tweet_id):
 #     tweet = get_object_or_404(Tweet, pk=tweet_id)
 #     return render(request, 'twitter/results.html', {'tweet': tweet})
 
-# @login_required
-
-# def tweet_new(request):
-#     if request.method == "POST":
-#         form = TweetForm(request.POST)
-#         if form.is_valid():
-#             tweet = form.save(commit=False)
-#             tweet.author = request.user
-#             tweet.pub_date =timezone.now()
-#             tweet.save()
-#             return redirect('twitter:detail',tweet_id=tweet.pk)
-#     else:
-#         form = TweetForm()
-#     return render(request, 'twitter/tweet_new.html', {'form': form})
+@login_required
+def tweet_new(request):
+     if request.method == "POST":
+         form = TweetForm(request.POST)
+         if form.is_valid():
+             tweet = form.save(commit=False)
+             tweet.author = request.user
+             tweet.pub_date =timezone.now()
+             tweet.save()
+             return redirect('twitter:detail',tweet_id=tweet.pk)
+     else:
+         form = TweetForm()
+     return render(request, 'twitter/tweet_new.html', {'form': form})
 
 
 def signup(request):
