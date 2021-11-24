@@ -6,17 +6,17 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 
 # Create your models here.
-class Tweet(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    tweet_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
-    nicevotes = models.IntegerField(default=0)
+# class Tweet(models.Model):
+#    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+#    tweet_text = models.CharField(max_length=200)
+#    pub_date = models.DateTimeField('date published')
+#    nicevotes = models.IntegerField(default=0)
 
-    def __str__(self):
-        return self.tweet_text
+#    def __str__(self):
+#        return self.tweet_text
 
-    def was_published_recently(self):
-        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+#    def was_published_recently(self):
+#        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 class Connection(models.Model):
     follower = models.ForeignKey(get_user_model(), related_name='follower', on_delete=models.CASCADE)
