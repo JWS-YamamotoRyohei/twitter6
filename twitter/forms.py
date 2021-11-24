@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 class TweetForm(forms.ModelForm):
     class Meta:
         model = Tweet
-        fields = ('tweet_text', 'author')
+        fields = ('tweet_text',)
 
 # class NiceVoteForm(forms.Form):
 #     def __init__(self, *args, **kwargs):
