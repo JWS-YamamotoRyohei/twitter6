@@ -6,11 +6,13 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 
 # Create your models here.
-# class Tweet(models.Model):
+
+class Tweet(models.Model):
 #    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-#    tweet_text = models.CharField(max_length=200)
-#    pub_date = models.DateTimeField('date published')
-#    nicevotes = models.IntegerField(default=0)
+    author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    tweet_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+    nicevotes = models.IntegerField(default=0)
 
 #    def __str__(self):
 #        return self.tweet_text
