@@ -21,10 +21,10 @@ class Tweet(models.Model):
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 
-class Connection(models.Model): 
-    follower = models.ForeignKey(get_user_model(), related_name='follower', on_delete=models.CASCADE) 
-    following = models.ForeignKey(get_user_model(), related_name='following', on_delete=models.CASCADE) 
-    date_created = models.DateTimeField(auto_now_add=True) 
+class Connection(models.Model):
+    follower = models.ForeignKey(get_user_model(), related_name='follower', on_delete=models.CASCADE)
+    following = models.ForeignKey(get_user_model(), related_name='following', on_delete=models.CASCADE)
+    date_created = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self): 
-        return "{} : {}".format(self.follower.username, self.following.username) 
+    def __str__(self):
+        return "{} : {}".format(self.follower.username, self.following.username)
