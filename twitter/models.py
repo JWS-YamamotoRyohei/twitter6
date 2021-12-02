@@ -18,7 +18,7 @@ class Tweet(models.Model):
 #        return self.tweet_text
 
 #    def was_published_recently(self):
-#        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+#        return self.pub_date >= timezone.now() - datetime.timedelta(days=1) 
 
 class Connection(models.Model): 
     follower = models.ForeignKey(get_user_model(), related_name='follower', on_delete=models.CASCADE) 
