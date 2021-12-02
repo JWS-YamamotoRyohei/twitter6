@@ -20,7 +20,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, Http404
 
 from .models import Connection
-# from .helpers import get_current_user
+from .helpers import get_current_user
 
 def index(request):
     latest_tweet_list = Tweet.objects.all().order_by('-pub_date')[:5]
@@ -78,62 +78,62 @@ def signup(request):
     context = {'form':form}
     return render(request, 'twitter/signup.html', context)
 
-#class ProfileDetailView(LoginRequiredMixin, DetailView):
-#     model = User
-#     template_name = "twitter/profile.html"
-#     slug_field = 'username'
-#     slug_url_kwarg = 'username'
+class ProfileDetailView(LoginRequiredMixin, DetailView):
+     model = User
+     template_name = "twitter/profile.html"
+     slug_field = 'username'
+     slug_url_kwarg = 'username'
 
-#     def get_context_data(self, **kwargs):
-#         context = super(ProfileDetailView, self).get_context_data(**kwargs)
-#         username = self.kwargs['username']
-#         context['username'] = username
-#         context['user'] = get_current_user(self.request)
-#         context['following'] = Connection.objects.filter(follower__username=username).count()
-#         context['followers'] = Connection.objects.filter(following__username=username).count()
+     def get_context_data(self, **kwargs):
+         context = super(ProfileDetailView, self).get_context_data(**kwargs)
+         username = self.kwargs['username']
+         context['username'] = username
+         context['user'] = get_current_user(self.request)
+         context['following'] = Connection.objects.filter(follower__username=username).count()
+         context['followers'] = Connection.objects.filter(following__username=username).count()
 
-#         if username is not context['user'].username:
-#             result = Connection.objects.filter(follower__username=context['user'].username).filter(following__username=username)
-#             context['connected'] = True if result else False
+         if username is not context['user'].username:
+             result = Connection.objects.filter(follower__username=context['user'].username).filter(following__username=username)
+             context['connected'] = True if result else False
 
-#         return context
+         return context
 
-# @login_required
-# def follow_view(request, *args, **kwargs):
-#     try:
-#         follower = User.objects.get(username=request.user)
-#         following = User.objects.get(username=kwargs['username'])
-#     except User.DoesNotExist:
-#         messages.warning(request, '{}は存在しません'.format(kwargs['username']))
-#         return HttpResponseRedirect(reverse_lazy('twitter:index'))
+@login_required
+def follow_view(request, *args, **kwargs):
+     try:
+         follower = User.objects.get(username=request.user)
+         following = User.objects.get(username=kwargs['username'])
+     except User.DoesNotExist:
+         messages.warning(request, '{}は存在しません'.format(kwargs['username']))
+         return HttpResponseRedirect(reverse_lazy('twitter:index'))
 
-#     if follower == following:
-#         messages.warning(request, '自分自身はフォローできませんよ')
-#     else:
-#         _, created = Connection.objects.get_or_create(follower=follower, following=following)
+     if follower == following:
+         messages.warning(request, '自分自身はフォローできませんよ')
+     else:
+         _, created = Connection.objects.get_or_create(follower=follower, following=following)
 
-#         if (created):
-#             messages.success(request, '{}をフォローしました'.format(following.username))
-#         else:
-#             messages.warning(request, 'あなたはすでに{}をフォローしています'.format(following.username))
+         if (created):
+             messages.success(request, '{}をフォローしました'.format(following.username))
+         else:
+             messages.warning(request, 'あなたはすでに{}をフォローしています'.format(following.username))
 
-#     return HttpResponseRedirect(reverse_lazy('twitter:profile', kwargs={'username': following.username}))
+     return HttpResponseRedirect(reverse_lazy('twitter:profile', kwargs={'username': following.username}))
 
-# @login_required
-# def unfollow_view(request, *args, **kwargs):
-#     try:
-#         follower = User.objects.get(username=request.user)
-#         following = User.objects.get(username=kwargs['username'])
-#         if follower == following:
-#             messages.warning(request, '自分自身のフォローを外せません')
-#         else:
-#             unfollow = Connection.objects.get(follower=follower, following=following)
-#             unfollow.delete()
-#             messages.success(request, 'あなたは{}のフォローを外しました'.format(following.username))
-#     except User.DoesNotExist:
-#         messages.warning(request, '{}は存在しません'.format(kwargs['username']))
-#         return HttpResponseRedirect(reverse_lazy('twitter:index'))
-#     except Connection.DoesNotExist:
-#         messages.warning(request, 'あなたは{0}をフォローしませんでした'.format(following.username))
+@login_required
+def unfollow_view(request, *args, **kwargs):
+     try:
+         follower = User.objects.get(username=request.user)
+         following = User.objects.get(username=kwargs['username'])
+         if follower == following:
+             messages.warning(request, '自分自身のフォローを外せません')
+         else:
+             unfollow = Connection.objects.get(follower=follower, following=following)
+             unfollow.delete()
+             messages.success(request, 'あなたは{}のフォローを外しました'.format(following.username))
+     except User.DoesNotExist:
+         messages.warning(request, '{}は存在しません'.format(kwargs['username']))
+         return HttpResponseRedirect(reverse_lazy('twitter:index'))
+     except Connection.DoesNotExist:
+         messages.warning(request, 'あなたは{0}をフォローしませんでした'.format(following.username))
 
-#     return HttpResponseRedirect(reverse_lazy('twitter:profile', kwargs={'username': following.username}))
+     return HttpResponseRedirect(reverse_lazy('twitter:profile', kwargs={'username': following.username}))
