@@ -14,11 +14,11 @@ class Tweet(models.Model):
     pub_date = models.DateTimeField('date published')
     nicevotes = models.IntegerField(default=0)
 
-#    def __str__(self):
-#        return self.tweet_text
+    def __str__(self):
+        return self.tweet_text
 
-#    def was_published_recently(self):
-#        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+    def was_published_recently(self):
+        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
 class Connection(models.Model):
     follower = models.ForeignKey(get_user_model(), related_name='follower', on_delete=models.CASCADE)
