@@ -20,7 +20,6 @@ class Tweet(models.Model):
     def was_published_recently(self):
         return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
 
-
 class Connection(models.Model):
     follower = models.ForeignKey(get_user_model(), related_name='follower', on_delete=models.CASCADE)
     following = models.ForeignKey(get_user_model(), related_name='following', on_delete=models.CASCADE)
