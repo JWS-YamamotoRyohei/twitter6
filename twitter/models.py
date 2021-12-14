@@ -22,7 +22,7 @@ class Tweet(models.Model):
 
 class Connection(models.Model):
     follower = models.ForeignKey(get_user_model(), related_name='conn_follower', on_delete=models.CASCADE)
-    following = models.ForeignKey(get_user_model(), related_name='following', on_delete=models.CASCADE)
+    following = models.ForeignKey(get_user_model(), related_name='conn_following', on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
