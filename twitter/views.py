@@ -92,9 +92,8 @@ class ProfileDetailView(LoginRequiredMixin, DetailView):
          context['followers_count'] = Connection.objects.filter(following__username=username).count()
 
          if username != context['user'].username:
-             result = Connection.objects.filter(follower__username=context['user'].username, following__username=username)
-             context['connected'] = True if Connection.objects.exists() else False
-
+             context['connected'] = Connection.objects.filter(follower__username=context['user'].username, following__username=username).exists()
+            
          return context
 
 @login_required
