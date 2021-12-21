@@ -1,0 +1,35 @@
+{% extends 'twitter/base.html' %}
+
+{% block content %}
+
+<div class="content container">
+    <div class="row">
+        <div class="col-md-8">
+          <h2>お気に入りのツイート</h2>
+
+          <form action="" method="POST">{% csrf_token %}
+              {% if tweet_list is null or tweet_list.count == 0 %}
+                <p>お気に入りのツイートはありません。</p>
+              {% else %}
+                {% for tweet in tweet_list %}
+                    <tr>
+                      <a href= "{% url 'twitter:profile' tweet.author %}">{{tweet.author}}</a></td>
+                    </tr>
+                    <tr>
+                      <td>{{tweet.tweet_text}}</td>
+                    </tr>
+                    <tr>
+                      <td><a href="{% url 'twitter:del_favorite' tweet.id %}">－お気に入り削除</a></td>
+                    </tr>
+                  <p>{{tweet.pub_date}}</p>
+                  <br>
+                {% endfor %}
+              {% endif %}
+          </form>
+          <br>
+          <a href= "{% url 'twitter:index' %}">HOME</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

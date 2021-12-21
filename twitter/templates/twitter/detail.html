@@ -13,9 +13,21 @@
             </form>
         :{{ tweet.nicevotes }}
         </div> -->
-    <br>
         <a href= "{% url 'twitter:profile' tweet.author %}">{{tweet.author}}</a>
-    <br>
-        <a href= "{% url 'twitter:tweetlist' %}">Tweet List</a>
+    
+    <p>
+        <br>
+            {% if tweet.id in favorite_tweet_list %}
+            <a href="{% url 'twitter:del_favorite' tweet.id %}">－お気に入り</a></td>
+            {% else %}
+            <a href="{% url 'twitter:add_favorite' tweet.id %}">＋お気に入り</a></td>
+            {% endif %}
+<!--        <br>
+            {% if user == tweet.author %}
+            <a href= "{% url 'twitter:del_tweet' tweet.id %}">tweet 削除</a>
+            {% endif %} -->
+        <br>
+            <a href= "{% url 'twitter:tweetlist' %}">Tweet List</a>
+    </p>
 </p>
 {% endblock %}

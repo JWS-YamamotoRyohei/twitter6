@@ -19,7 +19,8 @@ from django.urls import reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect, Http404
 
-from .models import Connection
+from .models import Connection,FavoriteTweet
+from itertools import chain
 
 def index(request):
     latest_tweet_list = Tweet.objects.all().order_by('-pub_date')[:5]
@@ -36,13 +37,14 @@ def tweetlist(request):
 def detail(request, tweet_id):
     user = request.user
     tweet = get_object_or_404(Tweet, pk=tweet_id)
+    favorite_tweet_list = FavoriteTweet.objects.filter(user=user).values_list('tweet', flat=True)
     if request.method == 'POST':
             tweet.nicevotes += 1
             tweet.save()
-            context = {'user':user,'tweet': tweet}
+            context = {'user':user,'tweet': tweet,'favorite_tweet_list': favorite_tweet_list}
             return render(request, 'twitter/detail.html', context)
 
-    context = {'user':user,'tweet': tweet}
+    context = {'user':user,'tweet': tweet,'favorite_tweet_list': favorite_tweet_list}
     return render(request, 'twitter/detail.html', context)
 
 
@@ -64,6 +66,11 @@ def tweet_new(request):
          form = TweetForm()
      return render(request, 'twitter/tweet_new.html', {'form': form})
 
+#@login_required
+#def del_tweet(request, tweet_id):
+#    tweet = get_object_or_404(Tweet, pk=tweet_id)
+#    tweet.delete()
+#    return redirect('twitter:tweetlist')
 
 def signup(request):
     if request.method == 'POST':
@@ -135,3 +142,33 @@ def unfollow_view(request, *args, **kwargs):
          messages.warning(request, 'あなたは{0}をフォローしませんでした'.format(following.username))
 
      return HttpResponseRedirect(reverse('twitter:profile', kwargs={'username': following.username}))
+
+@login_required
+def favoritelist(request):
+    favorite_tweet_list = FavoriteTweet.objects.filter(user=request.user).values_list('tweet', flat=True)
+    tweet_list = Tweet.objects.filter(id__in=favorite_tweet_list).order_by('pub_date').reverse()[:20]
+    context = {
+        'tweet_list': tweet_list
+    }
+    return render(request, 'twitter/favoritelist.html', context)
+
+@login_required
+def add_favorite(request, favorite_tweet_id):
+    favorite_tweet = get_object_or_404(Tweet, id=favorite_tweet_id)
+    tweet, created = FavoriteTweet.objects.get_or_create(
+        user=request.user,
+        tweet=favorite_tweet
+        )
+    print(created)
+    print(favorite_tweet)
+    if created:
+        tweet.save()
+    return redirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+def del_favorite(request, favorite_tweet_id):
+    favorite_tweet = get_object_or_404(Tweet, id=favorite_tweet_id)
+    tweet = FavoriteTweet.objects.filter(user=request.user, tweet=favorite_tweet)
+    if tweet.exists():
+        tweet.delete()
+    return redirect(request.META.get('HTTP_REFERER'))
