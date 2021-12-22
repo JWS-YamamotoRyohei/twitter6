@@ -22,7 +22,9 @@ app_name = 'twitter'
 urlpatterns = [
     path('', views.index, name='index'),
     path('tweetlist/', views.tweetlist, name='tweetlist'),
+    path('favoritelist/', views.favoritelist, name='favoritelist'),
     path('tweet_new/', views.tweet_new, name='tweet_new'),
+    path('del_tweet/<int:tweet_id>/', views.del_tweet, name='del_tweet'),
     path('<int:tweet_id>/', views.detail, name='detail'),
     # path('<int:tweet_id>/results/', views.results, name='results'),
     path('signup/', views.signup, name='signup'),
@@ -31,6 +33,8 @@ urlpatterns = [
     path('<slug:username>', views.ProfileDetailView.as_view(), name='profile'),
     path('<slug:username>/follow', views.follow_view, name='follow'),
     path('<slug:username>/unfollow', views.unfollow_view, name='unfollow'),
+    path('add-favorite/<int:favorite_tweet_id>/', views.add_favorite, name='add_favorite'),
+    path('del-favorite/<int:favorite_tweet_id>/', views.del_favorite, name='del_favorite'),
 ]
 
 
