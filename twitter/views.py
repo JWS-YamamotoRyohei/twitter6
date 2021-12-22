@@ -66,11 +66,11 @@ def tweet_new(request):
          form = TweetForm()
      return render(request, 'twitter/tweet_new.html', {'form': form})
 
-#@login_required
-#def del_tweet(request, tweet_id):
-#    tweet = get_object_or_404(Tweet, pk=tweet_id)
-#    tweet.delete()
-#    return redirect('twitter:tweetlist')
+@login_required
+def del_tweet(request, tweet_id):
+    tweet = get_object_or_404(Tweet, pk=tweet_id)
+    tweet.delete()
+    return redirect('twitter:tweetlist')
 
 def signup(request):
     if request.method == 'POST':

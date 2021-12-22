@@ -22,10 +22,10 @@
             {% else %}
             <a href="{% url 'twitter:add_favorite' tweet.id %}">＋お気に入り</a></td>
             {% endif %}
-<!--        <br>
+        <br>
             {% if user == tweet.author %}
             <a href= "{% url 'twitter:del_tweet' tweet.id %}">tweet 削除</a>
-            {% endif %} -->
+            {% endif %}
         <br>
             <a href= "{% url 'twitter:tweetlist' %}">Tweet List</a>
     </p>
