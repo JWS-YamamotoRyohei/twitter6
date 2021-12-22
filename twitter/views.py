@@ -20,7 +20,6 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, Http404
 
 from .models import Connection,FavoriteTweet
-from itertools import chain
 
 def index(request):
     latest_tweet_list = Tweet.objects.all().order_by('-pub_date')[:5]
@@ -36,7 +35,7 @@ def tweetlist(request):
 @login_required
 def detail(request, tweet_id):
     user = request.user
-    tweet = get_object_or_404(Tweet, pk=tweet_id)
+    tweet = get_object_or_404(Tweet.objects.select_related('author'), pk=tweet_id)
     favorite_tweet_list = FavoriteTweet.objects.filter(user=user).values_list('tweet', flat=True)
     if request.method == 'POST':
             tweet.nicevotes += 1
@@ -159,8 +158,6 @@ def add_favorite(request, favorite_tweet_id):
         user=request.user,
         tweet=favorite_tweet
         )
-    print(created)
-    print(favorite_tweet)
     if created:
         tweet.save()
     return redirect(request.META.get('HTTP_REFERER'))
